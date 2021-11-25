@@ -1,0 +1,74 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+
+  <mat-card fxFlex="600px" fxFlex.xs="100%">
+    <form [formGroup]="employeeForm" (submit)="submit()" fxLayout="column wrap" fxLayoutAlign="center center"
+      fxLayoutGap="10px">
+      <mat-card-title>
+        Add Employee
+      </mat-card-title>
+      <mat-card-content>
+        <!-- First Name -->
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="20px">
+          <mat-form-field class="form-field" appearance="outline" fxFlex>
+            <mat-label> First Name
+            </mat-label>
+            <input matInput formControlName="first_name" required>
+            <mat-error
+              *ngIf="employeeForm.controls['first_name'].touched && employeeForm.controls['first_name'].invalid">
+              <span *ngIf="hasError('first_name', 'required')">This field is mandatory.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- First Name -->
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="20px">
+          <mat-form-field class="form-field" appearance="outline" fxFlex>
+            <mat-label> Last Name
+            </mat-label>
+            <input matInput formControlName="last_name" required>
+            <mat-error *ngIf="employeeForm.controls['last_name'].touched && employeeForm.controls['last_name'].invalid">
+              <span *ngIf="hasError('last_name', 'required')">This field is mandatory.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Birth Date -->
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="20px">
+          <mat-form-field>
+            <input matInput [matDatepicker]="birthPicker" placeholder="Choose a date of birth"
+              formControlName="birth_date" id="birth_date" readonly (click)="birthPicker.open()">
+            <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+            <mat-datepicker #birthPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <!-- Hire Date -->
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="20px">
+          <mat-form-field>
+            <input matInput [matDatepicker]="hirePicker" placeholder="Hire Date" formControlName="hire_date"
+              id="birth_date" readonly (click)="hirePicker.open()">
+            <mat-datepicker-toggle matSuffix [for]="hirePicker"></mat-datepicker-toggle>
+            <mat-datepicker #hirePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <!-- Gender -->
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="20px">
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender" name="gender " required>
+              <mat-option *ngFor="let _gender of genders" [value]="_gender.value">
+                {{_gender.value}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="employeeForm.controls['gender'].touched && employeeForm.controls['gender'].invalid">
+              <span *ngIf="hasError('gender', 'required')">This field is mandatory.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" [disabled]="!employeeForm.valid">Add</button>
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+
+</div>
