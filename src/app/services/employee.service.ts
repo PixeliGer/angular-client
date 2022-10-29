@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, retry, throwError } from 'rxjs';
 import { Employee } from '../models/employee.model';
 
 @Injectable({
@@ -46,6 +46,24 @@ export class EmployeesService {
     return this.http.delete(`${this.API_URI}/employee/delete/${id}`).pipe(
       catchError(this.handleError)
     )
+  }
+
+  //Behavios Subject Example
+  public getEmployeesExample(): BehaviorSubject<any> {
+    const data$ = new BehaviorSubject<any>(null);
+    const endpoint$ = `$${this.API_URI}/employeesExample`;
+
+    this.http.get<any>(endpoint$).subscribe({
+      next: (response: any) => {
+        data$.next(response);
+        data$.complete();
+      },
+      error: (error) => {
+        data$.error(error);
+        data$.complete();
+      }
+    });
+    return data$;
   }
 
   // Handle Errors 
